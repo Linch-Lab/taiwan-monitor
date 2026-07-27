@@ -648,7 +648,7 @@
         "status": "状态",
         "duration": "耗时"
       },
-      "shellTitle": "World Monitor 设置",
+      "shellTitle": "Taiwan Monitor 設定",
       "shellSearchPlaceholder": "搜索设置...",
       "shellCancel": "取消",
       "shellSaveClose": "保存并关闭",
@@ -3182,7 +3182,7 @@
     "copyCoordinates": "复制坐标"
   },
   "shell": {
-    "documentTitle": "World Monitor — 实时全球情报仪表板",
+    "documentTitle": "Taiwan Monitor 台灣監視器 — 即時全球情報儀表板",
     "metaDescription": "实时全球情报平台。刊登于 WIRED。全球 190 个国家 200 万+ 用户使用。冲突、市场、军事、OSINT 信息一览无遗。",
     "offlineTitle": "您已离线",
     "offlineMessage": "World Monitor 需要互联网连接来获取实时情报数据。",
