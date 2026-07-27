@@ -1,9 +1,44 @@
-export const config = { runtime: 'edge', regions: ['iad1', 'lhr1', 'fra1', 'sfo1'] };
+// Taiwan Monitor: news proxy to Render API
+export const config = { runtime: 'edge' };
 
-import { createDomainGateway, serverOptions } from '../../../server/gateway';
-import { createNewsServiceRoutes } from '../../../src/generated/server/worldmonitor/news/v1/service_server';
-import { newsHandler } from '../../../server/worldmonitor/news/v1/handler';
+const RENDER_API = 'https://taiwan-monitor.onrender.com/api/news';
 
-export default createDomainGateway(
-  createNewsServiceRoutes(newsHandler, serverOptions),
-);
+export async function POST(req: Request) {
+  try {
+    const resp = await fetch(RENDER_API);
+    const data = await resp.json();
+    const articles = (data.articles || []).map((a: any) => ({
+      title: a.title || '',
+      url: a.link || '',
+      sourceName: a.source || '',
+      publishedAt: a.pubDate || new Date().toISOString(),
+      snippet: a.snippet || '',
+      category: a.region === 'tw' ? 'politics' : a.region === 'cn-zh' ? 'china-news' : 'intl-cross-strait',
+    }));
+
+    const emptyCategories = {
+      politics: [] as typeof articles,
+      tech: [], finance: [], us: [], europe: [], middleeast: [],
+      asia: [], latam: [], africa: [], oceania: [],
+    };
+
+    const byCategory: Record<string, typeof articles> = { ...emptyCategories };
+    for (const a of articles) {
+      const cat = a.category || 'politics';
+      if (!byCategory[cat]) byCategory[cat] = [];
+      byCategory[cat].push(a);
+    }
+
+    return Response.json({
+      ok: true,
+      result: {
+        categories: Object.fromEntries(
+          Object.entries(byCategory).map(([k, v]) => [k, { items: v }])
+        ),
+        items: articles,
+      },
+    });
+  } catch {
+    return Response.json({ ok: true, result: { categories: {}, items: [] } });
+  }
+}

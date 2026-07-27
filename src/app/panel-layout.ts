@@ -1808,6 +1808,10 @@ export class PanelLayoutManager implements AppModule {
     const mapModulePromise = import('@/components/MapContainer');
 
     this.createNewsPanel('politics', 'panels.politics');
+    // Taiwan Monitor news panels
+    this.createNewsPanelWithLabel('taiwan-news', '台灣新聞 Taiwan News', '台灣本地即時新聞', 'taiwan-news');
+    this.createNewsPanelWithLabel('china-news', '中國涉台新聞 China-TW News', '中國媒體涉台報導', 'china-news');
+    this.createNewsPanelWithLabel('intl-cross-strait', '國際涉台新聞 International', '國際媒體兩岸報導', 'intl-cross-strait');
     this.createNewsPanel('tech', 'panels.tech');
     this.createNewsPanel('finance', 'panels.finance');
 
