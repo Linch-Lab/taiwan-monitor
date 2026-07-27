@@ -1,25 +1,27 @@
-// Taiwan Monitor: fetch from EIA API directly (free tier)
+// Taiwan Monitor: read from Upstash Redis directly
 import type { ServerContext, GetCrudeInventoriesRequest, GetCrudeInventoriesResponse } from '../../../../src/generated/server/worldmonitor/economic/v1/service_server';
 
-const EIA_API_KEY = process.env.EIA_API_KEY || '';
-const EIA_URL = 'https://api.eia.gov/v2/petroleum/stoc/wstk/data/?api_key=' + EIA_API_KEY + '&facets[series][]=WCRSTUS1&sort[0][column]=period&sort[0][direction]=desc&length=52';
+const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL || '';
+const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || '';
+
+async function redisGet(key: string) {
+  try {
+    const url = `${REDIS_URL}/get/${key}`;
+    const resp = await fetch(url, {
+      headers: { Authorization: `Bearer ${REDIS_TOKEN}` },
+    });
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    return JSON.parse(data.result || 'null');
+  } catch { return null; }
+}
 
 export async function getCrudeInventories(
   ctx: ServerContext,
   _req: GetCrudeInventoriesRequest,
 ): Promise<GetCrudeInventoriesResponse> {
-  try {
-    if (!EIA_API_KEY) return { weeks: [], latestPeriod: '' };
-    const resp = await fetch(EIA_URL);
-    const data = await resp.json();
-    const weeks = (data.response?.data || []).map((d: any) => ({
-      period: d.period,
-      value: d.value,
-      unit: d.units || 'Million Barrels',
-    }));
-    return { weeks, latestPeriod: weeks[0]?.period || '' };
-  } catch (e) {
-    console.error('[getCrudeInventories] EIA fetch failed:', e);
-    return { weeks: [], latestPeriod: '' };
-  }
+  if (!REDIS_URL) return { weeks: [], latestPeriod: '' };
+  const cached = await redisGet('economic:crude-inventories:v1');
+  if (!cached?.weeks?.length) return { weeks: [], latestPeriod: '' };
+  return { weeks: cached.weeks, latestPeriod: cached.latestPeriod };
 }
