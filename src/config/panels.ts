@@ -1371,7 +1371,7 @@ export const PANEL_CATEGORY_MAP: Record<string, { labelKey: string; panelKeys: s
   },
   regionalNews: {
     labelKey: 'header.panelCatRegionalNews',
-    panelKeys: ['politics', 'us', 'europe', 'middleeast', 'africa', 'latam', 'asia'],
+    panelKeys: ['politics', 'us', 'europe', 'middleeast', 'africa', 'latam', 'asia', 'taiwan-news', 'china-news', 'intl-cross-strait'],
     variants: ['full'],
   },
   marketsFinance: {
