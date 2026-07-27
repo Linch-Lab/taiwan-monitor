@@ -1162,5 +1162,13 @@
         }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "api/**/*.ts": {
+      "runtime": "edge"
+    },
+    "api/**/*.js": {
+      "runtime": "edge"
+    }
+  }
 }
