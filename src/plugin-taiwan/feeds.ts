@@ -898,6 +898,10 @@ export const CANONICAL_FEEDS: Record<string, Feed[]> = mergeCanonicalFeeds([
   ENERGY_FEEDS,
   HAPPY_FEEDS,
 ]);
+// Taiwan Monitor: custom categories for news panels
+if (!CANONICAL_FEEDS['taiwan-news']) CANONICAL_FEEDS['taiwan-news'] = [];
+if (!CANONICAL_FEEDS['china-news']) CANONICAL_FEEDS['china-news'] = [];
+if (!CANONICAL_FEEDS['intl-cross-strait']) CANONICAL_FEEDS['intl-cross-strait'] = [];
 
 export const SOURCE_REGION_MAP: Record<string, { labelKey: string; feedKeys: string[] }> = {
   // Full (geopolitical) variant regions
