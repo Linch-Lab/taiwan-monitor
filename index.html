@@ -582,5 +582,21 @@
         }).catch(function(e){list.innerHTML='載入失敗: '+e.message});
       })();
     </script>
+  <!-- Taiwan Monitor: inject news from API -->
+  <script>
+  setTimeout(() => {
+    fetch('/api/data/news').then(r => r.json()).then(data => {
+      const cats = data.categories || {};
+      Object.entries(cats).forEach(([cat, v]) => {
+        const items = v.items || [];
+        if (!window.__tmNews) window.__tmNews = {};
+        window.__tmNews[cat] = items;
+      });
+      // Dispatch event so panels can pick it up
+      window.dispatchEvent(new CustomEvent('tm:news-ready', { detail: cats }));
+      console.log('Taiwan Monitor: news loaded', Object.keys(cats).map(k => k + ':' + (cats[k].items||[]).length).join(', '));
+    }).catch(e => console.warn('Taiwan Monitor: news fetch failed', e));
+  }, 4000);
+  </script>
   </body>
 </html>
