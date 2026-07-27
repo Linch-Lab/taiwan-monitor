@@ -55,7 +55,7 @@
     "gen:openapi:china-decision-signals": "node scripts/openapi-inject-china-decision-signals.mjs",
     "build:agent-skills": "node scripts/build-agent-skills-index.mjs",
     "prebuild": "npm run build:openapi && npm run build:agent-skills",
-    "build": "vite build --outDir ../../..",
+    "build": "vite build",
     "build:sidecar-sebuf": "node scripts/build-sidecar-sebuf.mjs",
     "build:desktop": "npm run security:vite-env-secrets -- --strict-local && node scripts/build-sidecar-sebuf.mjs && node scripts/build-sidecar-handlers.mjs && tsc && vite build",
     "build:full": "npm run security:vite-env-secrets -- --strict-local && npm run build:openapi && npm run build:agent-skills && npm run build:blog && npm run build:crawlable-corpus && npm run build:content-corpus && cross-env-shell VITE_VARIANT=full \"tsc && vite build\"",
