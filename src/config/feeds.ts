@@ -300,6 +300,18 @@ const FULL_FEEDS: Record<string, Feed[]> = {
     { name: 'Xinhua', url: rss('https://news.google.com/rss/search?q=site:xinhuanet.com+OR+Xinhua+when:1d&hl=en-US&gl=US&ceid=US:en') },
     { name: 'Japan Today', url: rss('https://japantoday.com/feed/atom') },
     { name: 'Nikkei Asia', url: rss('https://news.google.com/rss/search?q=site:asia.nikkei.com+when:3d&hl=en-US&gl=US&ceid=US:en') },
+    // Taiwan
+    { name: 'CNA 中央社', url: rss('https://www.cna.com.tw/cna2018api/api/W/rssxml/') },
+    { name: 'LTN 自由時報', url: rss('https://news.ltn.com.tw/rss/all.xml') },
+    { name: 'UDN 聯合報', url: rss('https://udn.com/rssfeed/news/1') },
+    { name: 'Storm 風傳媒', url: rss('https://www.storm.mg/rss/1/') },
+    { name: 'Newtalk 新頭殼', url: rss('https://newtalk.tw/rss') },
+    { name: 'Taiwan News (EN)', url: rss('https://news.google.com/rss/search?q=Taiwan+when:1d&hl=en-US&gl=US&ceid=US:en') },
+    { name: '台灣新聞 (zh)', url: rss('https://news.google.com/rss/search?q=台灣+when:1d&hl=zh-TW&gl=TW&ceid=TW:zh-Hant'), lang: 'zh' },
+    // China / Cross-Strait
+    { name: '中國新聞 (zh)', url: rss('https://news.google.com/rss/search?q=中國+when:1d&hl=zh-CN&gl=CN&ceid=CN:zh-Hans'), lang: 'zh' },
+    { name: '兩岸新聞', url: rss('https://news.google.com/rss/search?q=兩岸+OR+台海+when:1d&hl=zh-TW&gl=TW&ceid=TW:zh-Hant'), lang: 'zh' },
+    { name: 'China-Taiwan (EN)', url: rss('https://news.google.com/rss/search?q=China+Taiwan+cross+strait+when:1d&hl=en-US&gl=US&ceid=US:en') },
     { name: 'Asahi Shimbun', url: rss('https://www.asahi.com/rss/asahi/newsheadlines.rdf'), lang: 'ja' },
     { name: 'The Hindu', url: rss('https://www.thehindu.com/news/national/feeder/default.rss'), lang: 'en' },
     { name: 'Indian Express', url: rss('https://indianexpress.com/section/india/feed/') },
