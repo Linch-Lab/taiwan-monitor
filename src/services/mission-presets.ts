@@ -20,9 +20,10 @@ export type MissionPresetId =
   | 'osint-newsroom'
   | 'macro-market-watch'
   | 'tech-ai-watch'
-  | 'good-news-explorer';
+  | 'good-news-explorer'
+  | 'taiwan-cluster';
 
-export type MissionMapView = 'global' | 'america' | 'mena' | 'eu' | 'asia' | 'latam' | 'africa' | 'oceania';
+export type MissionMapView = 'global' | 'america' | 'mena' | 'eu' | 'asia' | 'latam' | 'africa' | 'oceania' | 'taiwan';
 export type MissionTimeRange = '1h' | '6h' | '24h' | '48h' | '7d' | 'all';
 
 export interface MissionPreset {
@@ -323,6 +324,45 @@ export const MISSION_PRESETS: readonly MissionPreset[] = [
       'happiness',
       'speciesRecovery',
       'renewableInstallations',
+    ],
+  },
+  {
+    id: 'taiwan-cluster',
+    label: 'Taiwan Cluster',
+    shortLabel: '台灣',
+    description: '台灣核心——即時新聞、台股、氫能、地緣風險、軍事動態。',
+    icon: '🇹🇼',
+    view: 'taiwan',
+    zoom: 6.5,
+    timeRange: '24h',
+    panels: [
+      'map',
+      'live-news',
+      'politics',
+      'insights',
+      'market',
+      'stock-analysis',
+      'energy-complex',
+      'energy-risk',
+      'energy-disruptions',
+      'strategic-risk',
+      'military-correlation',
+      'cii',
+      'gdelt-intel',
+    ],
+    layers: [
+      'conflicts',
+      'hotspots',
+      'bases',
+      'cables',
+      'pipelines',
+      'ais',
+      'military',
+      'hydrogenStations',
+      'ciiChoropleth',
+      'tradeRoutes',
+      'waterways',
+      'economic',
     ],
   },
 ];

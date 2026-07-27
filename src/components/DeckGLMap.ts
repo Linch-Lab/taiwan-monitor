@@ -188,7 +188,7 @@ import {
 
 
 export type TimeRange = '1h' | '6h' | '24h' | '48h' | '7d' | 'all';
-export type DeckMapView = 'global' | 'america' | 'mena' | 'eu' | 'asia' | 'latam' | 'africa' | 'oceania';
+export type DeckMapView = 'global' | 'america' | 'mena' | 'eu' | 'asia' | 'latam' | 'africa' | 'oceania' | 'taiwan';
 type MapInteractionMode = 'flat' | '3d';
 
 export interface CountryClickPayload {
@@ -237,6 +237,7 @@ const VIEW_PRESETS: Record<DeckMapView, { longitude: number; latitude: number; z
   latam: { longitude: -60, latitude: -15, zoom: 3 },
   africa: { longitude: 20, latitude: 5, zoom: 3 },
   oceania: { longitude: 135, latitude: -25, zoom: 3.5 },
+  taiwan: { longitude: 121, latitude: 23.5, zoom: 6.5 },
 };
 
 const MAP_INTERACTION_MODE: MapInteractionMode =
@@ -5424,6 +5425,7 @@ export class DeckGLMap {
           <option value="latam">${t('components.deckgl.views.latam')}</option>
           <option value="africa">${t('components.deckgl.views.africa')}</option>
           <option value="oceania">${t('components.deckgl.views.oceania')}</option>
+          <option value="taiwan">🇹🇼 台灣</option>
         </select>
       </div>
     `, "legacy direct innerHTML migration"));
