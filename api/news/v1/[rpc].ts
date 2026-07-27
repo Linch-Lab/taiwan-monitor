@@ -1,9 +1,21 @@
-// Taiwan Monitor stub — returns empty arrays so panels render without error
+// Taiwan Monitor — news proxy to Render relay
 export const config = { runtime: 'edge' };
 
+const RENDER_API = 'https://taiwan-monitor.onrender.com/api/news';
+
 export async function POST(req: Request) {
-  const body = await req.json().catch(() => ({}));
-  const method = body.method || '';
-  // Return empty results — panels will show "no data" instead of error
-  return Response.json({ ok: true, result: [] });
+  try {
+    const resp = await fetch(RENDER_API);
+    const data = await resp.json();
+    const articles = (data.articles || []).map((a: any) => ({
+      title: a.title,
+      url: a.link,
+      source: a.source,
+      publishedAt: a.pubDate,
+      snippet: a.snippet,
+    }));
+    return Response.json({ ok: true, result: { articles } });
+  } catch {
+    return Response.json({ ok: true, result: { articles: [] } });
+  }
 }
