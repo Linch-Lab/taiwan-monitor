@@ -655,6 +655,9 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src'),
+        // Taiwan Monitor plugin overrides
+        '@/config/feeds': resolve(__dirname, 'src/plugin-taiwan/feeds.ts'),
+        '@/config/variant-meta': resolve(__dirname, 'src/plugin-taiwan/variant-meta.ts'),
         child_process: resolve(__dirname, 'src/shims/child-process.ts'),
         'node:child_process': resolve(__dirname, 'src/shims/child-process.ts'),
         '@loaders.gl/worker-utils/dist/lib/process-utils/child-process-proxy.js': resolve(
