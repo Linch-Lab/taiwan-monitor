@@ -1,3 +1,2 @@
-// Taiwan Monitor: stub for source-tiers
+export const SOURCE_TIERS = { low: [], medium: [], high: [] } as const;
 export function getSourceTier() { return 'low' as const; }
-export default getSourceTier;
