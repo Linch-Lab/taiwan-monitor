@@ -1043,6 +1043,7 @@ const ENERGY_MAP_LAYERS: MapLayers = {
   storageFacilities: true, // UGS / SPR / LNG / crude hubs (Day 9-10 registry)
   fuelShortages: true,     // Global fuel shortage alerts (Day 11-12 registry)
   liveTankers: true,       // AIS ship type 80-89 inside chokepoint bboxes (parity-push PR 3)
+  hydrogenStations: false, // Static curated seed — discoverable via layer picker / CMD+K
 };
 
 const ENERGY_MOBILE_MAP_LAYERS: MapLayers = {

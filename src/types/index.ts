@@ -572,6 +572,20 @@ export interface GammaIrradiator {
   organization?: string;
 }
 
+export type HydrogenStationStatus = 'operational' | 'planned';
+
+export interface HydrogenStation {
+  id: string;
+  name: string;
+  city: string;
+  country: string;
+  lat: number;
+  lon: number;
+  status: HydrogenStationStatus;
+  capacityKgPerDay: number;
+  operator: string;
+}
+
 export type PipelineType = 'oil' | 'gas' | 'products';
 export type PipelineStatus = 'operating' | 'construction';
 
@@ -705,6 +719,8 @@ export interface MapLayers {
   /** Live tanker positions (AIS ship type 80-89) inside chokepoint bboxes.
    *  Refreshed every 60s via getVesselSnapshot. Energy Atlas parity-push. */
   liveTankers?: boolean;
+  /** Hydrogen refueling stations worldwide — static curated seed. */
+  hydrogenStations?: boolean;
 }
 
 export interface AIDataCenter {

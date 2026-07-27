@@ -90,6 +90,7 @@ import {
   INTEL_HOTSPOTS,
   CONFLICT_ZONES,
   GAMMA_IRRADIATORS,
+  HYDROGEN_STATIONS,
   PIPELINES,
   PIPELINE_COLORS,
   STRATEGIC_WATERWAYS,
@@ -1867,6 +1868,17 @@ export class DeckGLMap {
       this.layerCache.delete('fuel-shortages-layer');
     }
 
+    // Hydrogen refueling stations layer. Static curated seed — fast first
+    // paint with no server dependency. Color-differentiated by operational
+    // vs planned status. Available on any variant that toggles the layer
+    // via the layer picker / CMD+K; listed in the energy variant's
+    // VARIANT_LAYER_ORDER so it surfaces by default there.
+    if (mapLayers.hydrogenStations) {
+      layers.push(this.createHydrogenStationsLayer());
+    } else {
+      this.layerCache.delete('hydrogen-stations-layer');
+    }
+
     // Live tanker positions inside chokepoint bounding boxes. AIS ship type
     // 80-89 (tanker class). Refreshed every 60s; one Map<chokepointId, ...>
     // fetch per layer-tick. deckGLOnly per src/config/map-layer-definitions.ts.
@@ -2658,6 +2670,45 @@ export class DeckGLMap {
         }
         return true;
       },
+    });
+  }
+
+  /**
+   * Hydrogen refueling station scatterplot layer. Reads the static
+   * HYDROGEN_STATIONS seed (curated registry of real-world HRS sites).
+   * Color differentiates operational (green) vs planned (blue) status.
+   * Dot radius scales with capacity (kg/day) on a log scale so mega-
+   * stations dominate visually without making smaller sites invisible.
+   */
+  private createHydrogenStationsLayer(): ScatterplotLayer {
+    const cacheKey = 'hydrogen-stations-layer';
+
+    const statusColor = (status: string): [number, number, number, number] => {
+      switch (status) {
+        case 'operational': return [46, 204, 113, 220];  // green
+        case 'planned':     return [52, 152, 219, 220];  // blue
+        default:            return [149, 165, 166, 200]; // grey
+      }
+    };
+
+    const data = HYDROGEN_STATIONS.map(s => ({
+      ...s,
+      // log-scale radius: 200 kg/d → ~12000m, 500 kg/d → ~17500m
+      radius: Math.max(8000, Math.min(22000, 7000 + Math.log(Math.max(s.capacityKgPerDay, 1)) * 3000)),
+    }));
+
+    return new ScatterplotLayer({
+      id: cacheKey,
+      data,
+      getPosition: (d) => [d.lon, d.lat],
+      getFillColor: (d) => statusColor(d.status),
+      getRadius: (d) => d.radius,
+      stroked: true,
+      getLineColor: [255, 255, 255, 220],
+      lineWidthMinPixels: 1,
+      radiusMinPixels: 5,
+      radiusMaxPixels: 24,
+      pickable: true,
     });
   }
 
@@ -4801,6 +4852,10 @@ export class DeckGLMap {
         return { html: `<div class="deckgl-tooltip"><strong>${text(obj.title)}</strong><br/>${text(obj.location)}</div>` };
       case 'irradiators-layer':
         return { html: `<div class="deckgl-tooltip"><strong>${text(obj.name)}</strong><br/>${text(obj.type || t('components.deckgl.layers.gammaIrradiators'))}</div>` };
+      case 'hydrogen-stations-layer': {
+        const s = obj as { name?: string; operator?: string; status?: string; capacityKgPerDay?: number };
+        return { html: `<div class="deckgl-tooltip"><strong>${text(s.name || 'HRS')}</strong><br/>${text(s.operator || '')}<br/>${s.status === 'operational' ? '✅ Operational' : s.status === 'planned' ? '📋 Planned' : ''} · ${s.capacityKgPerDay ?? '—'} kg/day</div>` };
+      }
       case 'disease-outbreaks-layer': {
         const item = (obj as { item: DiseaseOutbreakItem }).item;
         if (!item) return null;
@@ -5857,6 +5912,7 @@ export class DeckGLMap {
               { shape: shapes.circle('rgb(231, 76, 60)'), label: t('components.deckgl.legend.diseaseAlert'), layerKey: 'diseaseOutbreaks' },
               { shape: shapes.circle('rgb(230, 126, 34)'), label: t('components.deckgl.legend.diseaseWarning'), layerKey: 'diseaseOutbreaks' },
               { shape: shapes.circle('rgb(241, 196, 15)'), label: t('components.deckgl.legend.diseaseWatch'), layerKey: 'diseaseOutbreaks' },
+              { shape: shapes.circle('rgb(46, 204, 113)'), label: 'Hydrogen Station', layerKey: 'hydrogenStations' },
               ...resilienceLegendItems,
             ];
 
