@@ -1,9 +1,9 @@
-// Taiwan Monitor stub — returns empty arrays so panels render without error
 export const config = { runtime: 'edge' };
 
-export async function POST(req: Request) {
-  const body = await req.json().catch(() => ({}));
-  const method = body.method || '';
-  // Return empty results — panels will show "no data" instead of error
-  return Response.json({ ok: true, result: [] });
-}
+import { createDomainGateway, serverOptions } from '../../../server/gateway';
+import { createInfrastructureServiceRoutes } from '../../../src/generated/server/worldmonitor/infrastructure/v1/service_server';
+import { infrastructureHandler } from '../../../server/worldmonitor/infrastructure/v1/handler';
+
+export default createDomainGateway(
+  createInfrastructureServiceRoutes(infrastructureHandler, serverOptions),
+);

@@ -1,21 +1,9 @@
-// Taiwan Monitor — news proxy to Render relay
-export const config = { runtime: 'edge' };
+export const config = { runtime: 'edge', regions: ['iad1', 'lhr1', 'fra1', 'sfo1'] };
 
-const RENDER_API = 'https://taiwan-monitor.onrender.com/api/news';
+import { createDomainGateway, serverOptions } from '../../../server/gateway';
+import { createNewsServiceRoutes } from '../../../src/generated/server/worldmonitor/news/v1/service_server';
+import { newsHandler } from '../../../server/worldmonitor/news/v1/handler';
 
-export async function POST(req: Request) {
-  try {
-    const resp = await fetch(RENDER_API);
-    const data = await resp.json();
-    const articles = (data.articles || []).map((a: any) => ({
-      title: a.title,
-      url: a.link,
-      source: a.source,
-      publishedAt: a.pubDate,
-      snippet: a.snippet,
-    }));
-    return Response.json({ ok: true, result: { articles } });
-  } catch {
-    return Response.json({ ok: true, result: { articles: [] } });
-  }
-}
+export default createDomainGateway(
+  createNewsServiceRoutes(newsHandler, serverOptions),
+);
