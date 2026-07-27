@@ -262,12 +262,9 @@ export function getLocale(): string {
 }
 
 export const LANGUAGES = [
+  { code: 'zh-TW', label: '繁體中文', flag: '🇹🇼' },
+  { code: 'zh', label: '简体中文', flag: '🇨🇳' },
   { code: 'en', label: 'English', flag: '🇬🇧' },
-  { code: 'bg', label: 'Български', flag: '🇧🇬' },
-  { code: 'ar', label: 'العربية', flag: '🇸🇦' },
-  { code: 'fa', label: 'فارسی', flag: '🇮🇷' },
-  { code: 'cs', label: 'Čeština', flag: '🇨🇿' },
-  { code: 'zh', label: '中文', flag: '🇨🇳' },
   { code: 'fr', label: 'Français', flag: '🇫🇷' },
   { code: 'de', label: 'Deutsch', flag: '🇩🇪' },
   { code: 'el', label: 'Ελληνικά', flag: '🇬🇷' },

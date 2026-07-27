@@ -898,6 +898,7 @@ export class PanelLayoutManager implements AppModule {
               <option value="latam">${t('components.deckgl.views.latam')}</option>
               <option value="africa">${t('components.deckgl.views.africa')}</option>
               <option value="oceania">${t('components.deckgl.views.oceania')}</option>
+              <option value="taiwan">🇹🇼 台灣</option>
             </select>
           </div>
           <span id="missionPresetMount" class="mission-preset-mount"></span>
@@ -986,7 +987,7 @@ export class PanelLayoutManager implements AppModule {
         { value: 'asia', label: t('components.deckgl.views.asia') },
         { value: 'latam', label: t('components.deckgl.views.latam') },
         { value: 'africa', label: t('components.deckgl.views.africa') },
-        { value: 'oceania', label: t('components.deckgl.views.oceania') },
+        { value: 'oceania', label: t('components.deckgl.views.oceania') }, { value: 'taiwan', label: '🇹🇼 台灣' },
       ].map(r =>
         `<button class="region-sheet-option ${r.value === 'global' ? 'active' : ''}" data-region="${r.value}">
           <span>${r.label}</span>
