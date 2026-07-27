@@ -73,3 +73,8 @@ export async function GET() {
   await redisSet('news:digest:v1:taiwan', JSON.stringify(digest));
   return Response.json({ ok: true, items: allItems.length });
 }
+
+// Manual trigger endpoint
+export async function POST() {
+  return GET();
+}
