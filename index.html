@@ -582,40 +582,5 @@
         }).catch(function(e){list.innerHTML='載入失敗: '+e.message});
       })();
     </script>
-  <!-- Taiwan Monitor: inject news into panels -->
-  <script>
-  (function injectNews() {
-    setTimeout(() => {
-      fetch('/api/data/news').then(r => r.json()).then(data => {
-        const cats = data.categories || {};
-        const all = [];
-        Object.entries(cats).forEach(([cat, v]) => {
-          (v.items || []).forEach(item => { item.category = cat; all.push(item); });
-        });
-        console.log('Taiwan Monitor: news loaded', all.length, 'items');
-        
-        // Inject into news panel container if it exists
-        const injectIntoPanel = () => {
-          const panels = document.querySelectorAll('[data-panel]');
-          panels.forEach(panel => {
-            const key = panel.getAttribute('data-panel');
-            const items = cats[key];
-            if (items && items.length) {
-              const list = panel.querySelector('.panel-content');
-              if (list) {
-                list.innerHTML = items.map(i => 
-                  '<div class="news-item"><a href="'+i.url+'" target="_blank">'+i.title+'</a><span class="source">'+i.source+'</span></div>'
-                ).join('');
-              }
-            }
-          });
-        };
-        // Retry a few times as panels load asynchronously
-        setTimeout(injectIntoPanel, 2000);
-        setTimeout(injectIntoPanel, 5000);
-      }).catch(e => console.warn('Taiwan Monitor: news failed', e));
-    }, 3000);
-  })();
-  </script>
   </body>
 </html>
