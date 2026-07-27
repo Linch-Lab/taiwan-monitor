@@ -1,0 +1,1 @@
+const t=/<p><strong>([A-Z][A-Z\s/]{1,29})<\/strong><\/p>/g,e=/<p>([A-Z][A-Z\s]{3,24})<\/p>/g;function c(s){return s.replace(t,'<div class="chat-section-header">$1</div>').replace(e,'<div class="chat-section-header">$1</div>')}export{c as p};
