@@ -6,7 +6,7 @@
       "schedule": "*/30 * * * *"
     },
     {
-      "path": "/api/cron/seed-news",
+      "path": "/api/seed-news",
       "schedule": "*/30 * * * *"
     }
   ],
