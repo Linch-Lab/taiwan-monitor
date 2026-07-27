@@ -10,9 +10,9 @@ import {
 const rss = rssProxyUrl;
 const railwayRss = rssProxyUrl;
 
-// Source tier system — canonical definition lives in server/_shared/source-tiers.ts
-// so server-side code can import it without pulling in client-only modules.
-export { SOURCE_TIERS, getSourceTier } from '../../server/_shared/source-tiers';
+// Taiwan Monitor: stub — no server dependency
+export const SOURCE_TIERS = { low: [], medium: [], high: [] } as const;
+export function getSourceTier() { return 'low' as const; }
 export {
   SOURCE_PROPAGANDA_RISK,
   SOURCE_TYPES,
