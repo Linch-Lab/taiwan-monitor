@@ -45,7 +45,7 @@ function normalizeLanguage(lng: string): SupportedLanguage {
   if (SUPPORTED_LANGUAGE_SET.has(base as SupportedLanguage)) {
     return base as SupportedLanguage;
   }
-  return 'en';
+  return 'zh';
 }
 
 function applyDocumentDirection(lang: string): void {
@@ -184,10 +184,11 @@ export async function initI18n(): Promise<void> {
     .init({
       resources: {
         en: { translation: enShellTranslation as TranslationDictionary },
+        zh: { translation: enShellTranslation as TranslationDictionary },
       },
       supportedLngs: [...SUPPORTED_LANGUAGES],
       nonExplicitSupportedLngs: true,
-      fallbackLng: 'en',
+      fallbackLng: 'zh',
       debug: import.meta.env.DEV,
       interpolation: {
         escapeValue: false, // not needed for these simple strings

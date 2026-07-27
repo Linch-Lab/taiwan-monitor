@@ -1,1 +1,0 @@
-import{_ as c,a as n}from"./embed-url-d-SgCBEn.js";import{q as t}from"./gdelt-intel-BcCZRWmb.js";const s=[],r=new c(n(),{fetch:t});async function u(e,a){return r.runScenario(e,{signal:a==null?void 0:a.signal})}async function g(e,a){return r.getScenarioStatus({jobId:e},{signal:a==null?void 0:a.signal})}export{s as S,g,u as r};

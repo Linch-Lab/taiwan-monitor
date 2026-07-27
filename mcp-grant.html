@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Authorize MCP — WorldMonitor</title>
-    <style>
+    <title>World Monitor - Real-Time Global Intelligence Dashboard</title>
+    <style nonce="wm-static-bootstrap">
       *{box-sizing:border-box;margin:0;padding:0}
       body{font-family:ui-monospace,'SF Mono','Cascadia Code','JetBrains Mono',monospace;background:#0a0a0a;color:#e8e8e8;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem}
       .wm-logo{display:flex;align-items:center;gap:.5rem;margin-bottom:2rem;text-decoration:none}
@@ -36,6 +36,9 @@
          at src/mcp-grant-main.ts handles theme application on DOMContentLoaded;
          a brief default-theme flash on light-preference users is acceptable
          for a transient consent UI (reviewer round-2 P3). -->
+    <meta property="csp-nonce" nonce="wm-static-bootstrap">
+    <script type="module" crossorigin src="/assets/mcpGrant-Cl8ll3iC.js" nonce="wm-static-bootstrap"></script>
+    <link rel="modulepreload" crossorigin href="/assets/clerk-DvUNuV7p.js" nonce="wm-static-bootstrap">
   </head>
   <body>
     <a href="https://www.worldmonitor.app" class="wm-logo" target="_blank" rel="noopener">
@@ -68,7 +71,6 @@
         <p style="font-size:.8rem;color:#666;line-height:1.5" id="errorBody">This authorization request expired or is invalid. Start over from your MCP client (e.g. Claude Desktop).</p>
       </div>
     </div>
-    <p class="footer"><a href="https://www.worldmonitor.app" target="_blank" rel="noopener">worldmonitor.app</a> &middot; <a href="https://www.worldmonitor.app/pro" target="_blank" rel="noopener">Pro plan →</a></p>
-    <script type="module" src="/src/mcp-grant-main.ts" nonce="wm-static-bootstrap"></script>
+    <p class="footer"><a href="https://www.worldmonitor.app" target="_blank" rel="noopener">worldmonitor.app</a> &middot; <a href="https://www.worldmonitor.app/pro" target="_blank" rel="noopener">Pro plan →</a></p>
   </body>
 </html>
