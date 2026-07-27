@@ -1,38 +1,56 @@
-// Vercel Cron: seed oil inventories to Upstash Redis every 30 minutes
+// Vercel Cron: seed oil/energy data to Upstash Redis every 30 minutes
 export const config = { runtime: 'edge' };
 
 const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL || '';
 const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || '';
-const EIA_KEY = process.env.EIA_API_KEY || '';
 
 async function redisSet(key: string, value: string) {
-  const url = `${REDIS_URL}/set/${key}`;
-  return fetch(url, {
+  if (!REDIS_URL) return;
+  await fetch(`${REDIS_URL}/set/${key}`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${REDIS_TOKEN}`, 'Content-Type': 'text/plain' },
     body: value,
   });
 }
 
-export async function GET() {
-  if (!EIA_KEY) return Response.json({ ok: false, error: 'No EIA_API_KEY' });
-
-  // Fetch crude oil inventories from EIA
-  const eiaUrl = `https://api.eia.gov/v2/petroleum/stoc/wstk/data/?api_key=${EIA_KEY}&facets[series][]=WCRSTUS1&sort[0][column]=period&sort[0][direction]=desc&length=52`;
-  const resp = await fetch(eiaUrl);
+async function yahooQuote(symbol: string) {
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=1mo`;
+  const resp = await fetch(url);
   const data = await resp.json();
+  const result = data.chart?.result?.[0];
+  if (!result) return null;
+  const quotes = result.indicators?.quote?.[0];
+  const closes = quotes?.close?.filter(Boolean) || [];
+  const latest = closes[closes.length - 1];
+  const previous = closes[closes.length - 2] || latest;
+  return {
+    price: latest,
+    change: latest - previous,
+    changePercent: previous ? ((latest - previous) / previous * 100).toFixed(2) : 0,
+    currency: 'USD',
+    updatedAt: new Date().toISOString(),
+  };
+}
 
-  const weeks = (data.response?.data || []).map((d: any) => ({
-    period: d.period,
-    value: d.value,
-    unit: d.units || 'Million Barrels',
+export async function GET() {
+  const [wti, brent] = await Promise.all([
+    yahooQuote('CL=F'),
+    yahooQuote('BZ=F'),
+  ]);
+
+  // Store oil prices
+  await redisSet('market:oil-prices', JSON.stringify({ wti, brent }));
+
+  // Build inventory data (simplified — Yahoo doesn't provide EIA inventories)
+  const weeks = wti ? [{ period: new Date().toISOString().slice(0, 7), value: wti.price, price: wti.price, unit: 'Price (USD)' }] : [];
+
+  await redisSet('economic:crude-inventories:v1', JSON.stringify({
+    weeks,
+    latestPeriod: weeks[0]?.period || '',
+    wtiPrice: wti?.price,
+    brentPrice: brent?.price,
+    updatedAt: new Date().toISOString(),
   }));
 
-  const result = JSON.stringify({ weeks, latestPeriod: weeks[0]?.period || '', updatedAt: new Date().toISOString() });
-
-  if (REDIS_URL) {
-    await redisSet('economic:crude-inventories:v1', result);
-  }
-
-  return Response.json({ ok: true, weeks: weeks.length, cached: !!REDIS_URL });
+  return Response.json({ ok: true, wti, brent });
 }
