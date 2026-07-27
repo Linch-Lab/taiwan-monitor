@@ -189,6 +189,7 @@ export async function initI18n(): Promise<void> {
       supportedLngs: [...SUPPORTED_LANGUAGES],
       nonExplicitSupportedLngs: true,
       fallbackLng: 'zh',
+      lng: 'zh',
       debug: import.meta.env.DEV,
       interpolation: {
         escapeValue: false, // not needed for these simple strings
