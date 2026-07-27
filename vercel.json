@@ -2,11 +2,11 @@
   "ignoreCommand": "bash scripts/vercel-ignore.sh",
   "crons": [
     {
-      "path": "/api/cron/seed-oil",
+      "path": "/api/seed-news",
       "schedule": "*/30 * * * *"
     },
     {
-      "path": "/api/seed-news",
+      "path": "/api/cron/seed-oil",
       "schedule": "*/30 * * * *"
     }
   ],
