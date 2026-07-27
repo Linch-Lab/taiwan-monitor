@@ -1,5 +1,4 @@
 server/
-src/generated/
 node_modules/
 .git/
 .scratch/
