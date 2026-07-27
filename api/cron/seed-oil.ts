@@ -3,6 +3,7 @@ export const config = { runtime: 'edge' };
 
 const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL || '';
 const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || '';
+const CRON_SECRET = process.env.CRON_SECRET || 'taiwan-monitor-seed';
 
 async function redisSet(key: string, value: string) {
   if (!REDIS_URL) return;
@@ -32,7 +33,13 @@ async function yahooQuote(symbol: string) {
   };
 }
 
-export async function GET() {
+export async function GET(req: Request) {
+  // Verify cron authorization
+  const auth = req.headers.get('authorization') || '';
+  if (auth !== `Bearer ${CRON_SECRET}`) {
+    return Response.json({ error: 'Forbidden' }, { status: 403 });
+  }
+
   const [wti, brent] = await Promise.all([
     yahooQuote('CL=F'),
     yahooQuote('BZ=F'),
