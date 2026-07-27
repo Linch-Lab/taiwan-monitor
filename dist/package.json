@@ -1,1 +1,7 @@
-{"name": "taiwan-monitor-static", "private": true}
+{
+  "name": "taiwan-monitor-static",
+  "private": true,
+  "scripts": {
+    "build": "echo ok"
+  }
+}
