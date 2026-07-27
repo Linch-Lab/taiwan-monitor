@@ -1,30 +1,25 @@
-/**
- * RPC: getCrudeInventories -- reads seeded EIA WCRSTUS1 crude oil inventory data.
- * All external EIA API calls happen in seed-economy.mjs on Railway.
- */
+// Taiwan Monitor: fetch from EIA API directly (free tier)
+import type { ServerContext, GetCrudeInventoriesRequest, GetCrudeInventoriesResponse } from '../../../../src/generated/server/worldmonitor/economic/v1/service_server';
 
-import type {
-  ServerContext,
-  GetCrudeInventoriesRequest,
-  GetCrudeInventoriesResponse,
-} from '../../../../src/generated/server/worldmonitor/economic/v1/service_server';
-
-import { getCachedJson } from '../../../_shared/redis';
-import { markNoStoreFallbackResponse } from '../../../_shared/response-headers';
-
-const SEED_CACHE_KEY = 'economic:crude-inventories:v1';
+const EIA_API_KEY = process.env.EIA_API_KEY || '';
+const EIA_URL = 'https://api.eia.gov/v2/petroleum/stoc/wstk/data/?api_key=' + EIA_API_KEY + '&facets[series][]=WCRSTUS1&sort[0][column]=period&sort[0][direction]=desc&length=52';
 
 export async function getCrudeInventories(
   ctx: ServerContext,
   _req: GetCrudeInventoriesRequest,
 ): Promise<GetCrudeInventoriesResponse> {
   try {
-    // true = raw key: seed scripts write without Vercel env prefix
-    const result = await getCachedJson(SEED_CACHE_KEY, true) as GetCrudeInventoriesResponse | null;
-    if (!result?.weeks?.length) return markNoStoreFallbackResponse(ctx.request, { weeks: [], latestPeriod: '' });
-    return result;
-  } catch (err) {
-    console.error('[getCrudeInventories] Redis read failed:', err);
-    return markNoStoreFallbackResponse(ctx.request, { weeks: [], latestPeriod: '' });
+    if (!EIA_API_KEY) return { weeks: [], latestPeriod: '' };
+    const resp = await fetch(EIA_URL);
+    const data = await resp.json();
+    const weeks = (data.response?.data || []).map((d: any) => ({
+      period: d.period,
+      value: d.value,
+      unit: d.units || 'Million Barrels',
+    }));
+    return { weeks, latestPeriod: weeks[0]?.period || '' };
+  } catch (e) {
+    console.error('[getCrudeInventories] EIA fetch failed:', e);
+    return { weeks: [], latestPeriod: '' };
   }
 }
