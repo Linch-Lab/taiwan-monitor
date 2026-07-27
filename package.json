@@ -39,7 +39,6 @@
     "dev:commodity": "cross-env VITE_VARIANT=commodity vite",
     "dev:energy": "cross-env VITE_VARIANT=energy vite",
     "postinstall": "cd blog-site && npm ci --prefer-offline",
-    "build:blog": "cd blog-site && npm run build && rm -rf ../public/blog && mkdir -p ../public/blog && cp -r dist/* ../public/blog/",
     "build:crawlable-corpus": "tsx scripts/build-crawlable-corpus.mjs",
     "build:content-corpus": "node scripts/build-content-corpus-sitemap.mjs",
     "build:pro": "cd pro-test && npm ci && npm run build",
