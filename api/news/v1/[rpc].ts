@@ -1,43 +1,19 @@
-// Taiwan Monitor: news proxy to Render API
+// Taiwan Monitor: news RPC — reads from Upstash Redis
 export const config = { runtime: 'edge' };
 
-const RENDER_API = 'https://taiwan-monitor.onrender.com/api/news';
+const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL || '';
+const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || '';
 
-export async function POST(req: Request) {
+export async function POST() {
+  if (!REDIS_URL) return Response.json({ ok: true, result: { categories: {}, items: [] } });
+
   try {
-    const resp = await fetch(RENDER_API);
-    const data = await resp.json();
-    const articles = (data.articles || []).map((a: any) => ({
-      title: a.title || '',
-      url: a.link || '',
-      sourceName: a.source || '',
-      publishedAt: a.pubDate || new Date().toISOString(),
-      snippet: a.snippet || '',
-      category: a.region === 'tw' ? 'politics' : a.region === 'cn-zh' ? 'china-news' : 'intl-cross-strait',
-    }));
-
-    const emptyCategories = {
-      politics: [] as typeof articles,
-      tech: [], finance: [], us: [], europe: [], middleeast: [],
-      asia: [], latam: [], africa: [], oceania: [],
-    };
-
-    const byCategory: Record<string, typeof articles> = { ...emptyCategories };
-    for (const a of articles) {
-      const cat = a.category || 'politics';
-      if (!byCategory[cat]) byCategory[cat] = [];
-      byCategory[cat].push(a);
-    }
-
-    return Response.json({
-      ok: true,
-      result: {
-        categories: Object.fromEntries(
-          Object.entries(byCategory).map(([k, v]) => [k, { items: v }])
-        ),
-        items: articles,
-      },
+    const resp = await fetch(`${REDIS_URL}/get/news:digest:v1:taiwan`, {
+      headers: { Authorization: `Bearer ${REDIS_TOKEN}` },
     });
+    const data = await resp.json();
+    const digest = JSON.parse(data.result || '{}');
+    return Response.json({ ok: true, result: digest });
   } catch {
     return Response.json({ ok: true, result: { categories: {}, items: [] } });
   }
