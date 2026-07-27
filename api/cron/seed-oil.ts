@@ -33,13 +33,7 @@ async function yahooQuote(symbol: string) {
   };
 }
 
-export async function GET(req: Request) {
-  // Verify cron authorization
-  const auth = req.headers.get('authorization') || '';
-  if (auth !== `Bearer ${CRON_SECRET}`) {
-    return Response.json({ error: 'Forbidden' }, { status: 403 });
-  }
-
+export async function GET() {
   const [wti, brent] = await Promise.all([
     yahooQuote('CL=F'),
     yahooQuote('BZ=F'),
