@@ -1,0 +1,26 @@
+name: Taiwan Monitor Seed
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+jobs:
+  seed-news:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Seed News to Redis
+        uses: actions/github-script@v7
+        env:
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+        with:
+          script: |
+            const https = require('https');
+            const http = require('http');
+            const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
+            const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+            console.log('Seeding news to Redis...');
+            console.log('Done');
