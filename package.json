@@ -114,7 +114,8 @@
     "desktop:package:windows:tech:sign": "node scripts/desktop-package.mjs --os windows --variant tech --sign",
     "desktop:package": "node scripts/desktop-package.mjs",
     "test:convex": "vitest run --config vitest.config.mts",
-    "test:convex:watch": "vitest --config vitest.config.mts"
+    "test:convex:watch": "vitest --config vitest.config.mts",
+    "build:hostinger": "vite build"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.7",
