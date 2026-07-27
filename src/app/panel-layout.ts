@@ -2556,6 +2556,8 @@ export class PanelLayoutManager implements AppModule {
 
     this.ctx.map.initEscalationGetters();
     this.ctx.currentTimeRange = this.ctx.map.getTimeRange();
+    // Taiwan Monitor: center on Taiwan
+    this.ctx.map.setCenter(23.5, 121, 6.5);
     markLcpDebug('wm:map:container-ready');
 
     this.ctx.map.onTimeRangeChanged((range) => {
