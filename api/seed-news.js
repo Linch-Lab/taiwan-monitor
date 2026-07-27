@@ -55,6 +55,11 @@ async function seed() {
 }
 
 module.exports = async function handler(req, res) {
+  const authHeader = req.headers['authorization'] || '';
+  const cronSecret = process.env.CRON_SECRET || 'taiwan-monitor-seed';
+  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
   try {
     const digest = await seed();
     res.status(200).json({ ok: true, items: digest.totalItems });
