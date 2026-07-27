@@ -2537,9 +2537,9 @@ export class PanelLayoutManager implements AppModule {
     if (this.ctx.isDestroyed) return;
     markLcpDebug('wm:map:container-construct');
     this.ctx.map = new MapContainer(mapContainer, {
-      zoom: this.ctx.isMobile ? 2.5 : 1.0,
+      zoom: 4.5,
       pan: { x: 0, y: 0 },
-      view: this.ctx.isMobile ? this.ctx.resolvedLocation : 'global',
+      view: 'asia',
       layers: this.ctx.mapLayers,
       timeRange: '7d',
     }, preferGlobe);
