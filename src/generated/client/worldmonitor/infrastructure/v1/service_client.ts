@@ -1,0 +1,23 @@
+// Taiwan Monitor stub
+export const CableHealthRecord: any = null;
+export type CableHealthRecord = any;
+export const DdosLocationHit: any = null;
+export type DdosLocationHit = any;
+export const GetCableHealthResponse: any = null;
+export type GetCableHealthResponse = any;
+export const InternetOutage: any = null;
+export type InternetOutage = any;
+export const ListInternetDdosAttacksResponse: any = null;
+export type ListInternetDdosAttacksResponse = any;
+export const ListInternetOutagesResponse: any = null;
+export type ListInternetOutagesResponse = any;
+export const ListInternetTrafficAnomaliesResponse: any = null;
+export type ListInternetTrafficAnomaliesResponse = any;
+export const ListServiceStatusesResponse: any = null;
+export type ListServiceStatusesResponse = any;
+export const ServiceStatus: any = null;
+export type ServiceStatus = any;
+export const TemporalAnomaly: any = null;
+export type TemporalAnomaly = any;
+export const TrafficAnomaly: any = null;
+export type TrafficAnomaly = any;

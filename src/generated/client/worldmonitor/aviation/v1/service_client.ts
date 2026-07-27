@@ -1,0 +1,21 @@
+// Taiwan Monitor stub
+export const AirportDelayAlert: any = null;
+export type AirportDelayAlert = any;
+export const AirportOpsSummary: any = null;
+export type AirportOpsSummary = any;
+export const AviationNewsItem: any = null;
+export type AviationNewsItem = any;
+export const CabinClass: any = null;
+export type CabinClass = any;
+export const CarrierOpsSummary: any = null;
+export type CarrierOpsSummary = any;
+export const DatePriceEntry: any = null;
+export type DatePriceEntry = any;
+export const FlightInstance: any = null;
+export type FlightInstance = any;
+export const GoogleFlightResult: any = null;
+export type GoogleFlightResult = any;
+export const PositionSample: any = null;
+export type PositionSample = any;
+export const PriceQuote: any = null;
+export type PriceQuote = any;

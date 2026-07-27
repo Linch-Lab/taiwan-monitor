@@ -1,0 +1,25 @@
+// Taiwan Monitor stub
+export const AircraftDetails: any = null;
+export type AircraftDetails = any;
+export const DefensePatentFiling: any = null;
+export type DefensePatentFiling = any;
+export const GetTheaterPostureResponse: any = null;
+export type GetTheaterPostureResponse = any;
+export const GetUSNIFleetReportResponse: any = null;
+export type GetUSNIFleetReportResponse = any;
+export const ListMilitaryBasesResponse: any = null;
+export type ListMilitaryBasesResponse = any;
+export const MilitaryAircraftType: any = null;
+export type MilitaryAircraftType = any;
+export const MilitaryBaseCluster: any = null;
+export type MilitaryBaseCluster = any;
+export const MilitaryBaseEntry: any = null;
+export type MilitaryBaseEntry = any;
+export const MilitaryFlight: any = null;
+export type MilitaryFlight = any;
+export const MilitaryOperator: any = null;
+export type MilitaryOperator = any;
+export const TheaterPosture: any = null;
+export type TheaterPosture = any;
+export const WingbitsLiveFlight: any = null;
+export type WingbitsLiveFlight = any;

@@ -1,0 +1,19 @@
+// Taiwan Monitor stub
+export const AcledConflictEvent: any = null;
+export type AcledConflictEvent = any;
+export const GetHumanitarianSummaryBatchResponse: any = null;
+export type GetHumanitarianSummaryBatchResponse = any;
+export const GetHumanitarianSummaryResponse: any = null;
+export type GetHumanitarianSummaryResponse = any;
+export const HumanitarianCountrySummary: any = null;
+export type HumanitarianCountrySummary = any;
+export const IranEvent: any = null;
+export type IranEvent = any;
+export const ListAcledEventsResponse: any = null;
+export type ListAcledEventsResponse = any;
+export const ListIranEventsResponse: any = null;
+export type ListIranEventsResponse = any;
+export const ListUcdpEventsResponse: any = null;
+export type ListUcdpEventsResponse = any;
+export const UcdpViolenceEvent: any = null;
+export type UcdpViolenceEvent = any;

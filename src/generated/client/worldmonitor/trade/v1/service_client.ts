@@ -1,0 +1,27 @@
+// Taiwan Monitor stub
+export const ComtradeFlowRecord: any = null;
+export type ComtradeFlowRecord = any;
+export const CustomsRevenueMonth: any = null;
+export type CustomsRevenueMonth = any;
+export const EffectiveTariffRate: any = null;
+export type EffectiveTariffRate = any;
+export const GetCustomsRevenueResponse: any = null;
+export type GetCustomsRevenueResponse = any;
+export const GetTariffTrendsResponse: any = null;
+export type GetTariffTrendsResponse = any;
+export const GetTradeBarriersResponse: any = null;
+export type GetTradeBarriersResponse = any;
+export const GetTradeFlowsResponse: any = null;
+export type GetTradeFlowsResponse = any;
+export const GetTradeRestrictionsResponse: any = null;
+export type GetTradeRestrictionsResponse = any;
+export const ListComtradeFlowsResponse: any = null;
+export type ListComtradeFlowsResponse = any;
+export const TariffDataPoint: any = null;
+export type TariffDataPoint = any;
+export const TradeBarrier: any = null;
+export type TradeBarrier = any;
+export const TradeFlowRecord: any = null;
+export type TradeFlowRecord = any;
+export const TradeRestriction: any = null;
+export type TradeRestriction = any;

@@ -1,0 +1,23 @@
+// Taiwan Monitor stub
+export const BasketPoint: any = null;
+export type BasketPoint = any;
+export const CategorySnapshot: any = null;
+export type CategorySnapshot = any;
+export const GetConsumerPriceBasketSeriesResponse: any = null;
+export type GetConsumerPriceBasketSeriesResponse = any;
+export const GetConsumerPriceFreshnessResponse: any = null;
+export type GetConsumerPriceFreshnessResponse = any;
+export const GetConsumerPriceOverviewResponse: any = null;
+export type GetConsumerPriceOverviewResponse = any;
+export const ListConsumerPriceCategoriesResponse: any = null;
+export type ListConsumerPriceCategoriesResponse = any;
+export const ListConsumerPriceMoversResponse: any = null;
+export type ListConsumerPriceMoversResponse = any;
+export const ListRetailerPriceSpreadsResponse: any = null;
+export type ListRetailerPriceSpreadsResponse = any;
+export const PriceMover: any = null;
+export type PriceMover = any;
+export const RetailerFreshnessInfo: any = null;
+export type RetailerFreshnessInfo = any;
+export const RetailerSpread: any = null;
+export type RetailerSpread = any;
