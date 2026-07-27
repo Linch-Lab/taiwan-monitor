@@ -195,7 +195,7 @@ export async function initI18n(): Promise<void> {
         escapeValue: false, // not needed for these simple strings
       },
       detection: {
-        order: ['wmQuery', 'wmExplicit', 'navigator'],
+        order: ['wmQuery', 'wmExplicit'],
         caches: [], // never auto-write — only changeLanguage() persists
       },
     });
