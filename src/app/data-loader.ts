@@ -627,7 +627,7 @@ export class DataLoaderManager implements AppModule {
     try {
       markLcpDebug('wm:data:feed-digest-start');
       const resp = await publicRpcFetch(
-        toApiUrl(`/api/news/v1/list-feed-digest?variant=${SITE_VARIANT}&lang=${getCurrentLanguage()}`),
+        toApiUrl(`/api/data/news`),
         { signal: AbortSignal.timeout(this.digestRequestTimeoutMs) },
       );
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
