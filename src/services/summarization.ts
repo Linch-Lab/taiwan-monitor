@@ -113,6 +113,7 @@ interface ApiProviderDef {
 // (DeepSeek V4 Flash) ahead of Groq — the RPC honors the client-supplied
 // provider, so the client's try-order decides which model summarizes.
 const API_PROVIDERS: ApiProviderDef[] = [
+  { featureId: 'aiDeepSeek',    provider: 'deepseek',   label: 'DeepSeek' },
   { featureId: 'aiOllama',      provider: 'ollama',     label: 'Ollama' },
   { featureId: 'aiOpenRouter',  provider: 'openrouter', label: 'OpenRouter' },
   { featureId: 'aiGroq',        provider: 'groq',       label: 'Groq AI' },
