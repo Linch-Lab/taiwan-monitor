@@ -210,6 +210,22 @@ export class App {
       // viewport-gated and inflight-guarded — repeat invocations are
       // cheap.
       void this.dataLoader.loadAllData();
+      // Taiwan Monitor: fallback news injection after data pipeline
+      setTimeout(() => {
+        fetch('/api/data/news').then(r => r.json()).then(d => {
+          const { categories } = d;
+          if (!categories) return;
+          Object.entries(categories).forEach(([cat, bucket]) => {
+            if (!this.ctx.newsByCategory) this.ctx.newsByCategory = {};
+            this.ctx.newsByCategory[cat] = bucket.items || [];
+            const panel = this.ctx.newsPanels && this.ctx.newsPanels[cat];
+            if (panel && typeof panel.renderNews === 'function') {
+              panel.renderNews(bucket.items || []);
+            }
+          });
+          console.log('Taiwan Monitor: injected', Object.keys(categories).length, 'news categories');
+        }).catch(e => console.warn('Taiwan Monitor: news inject failed', e));
+      }, 6000);
     });
   };
   private readonly handleConnectivityChange = (): void => {
