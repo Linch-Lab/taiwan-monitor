@@ -41,7 +41,7 @@ const FULL_PANELS: Record<string, PanelConfig> = {
   'disaster-correlation': { name: 'Disaster Cascade', enabled: true, priority: 2 },
   politics: { name: 'World News', enabled: true, priority: 1 },
   'taiwan-news': { name: '台灣新聞 Taiwan News', enabled: true, priority: 1 },
-  'china-news': { name: '中國涉台新聞 China-TW News', enabled: true, priority: 1 },
+  'china-news': { name: '兩岸新聞 Cross-Strait', enabled: true, priority: 1 },
   'intl-cross-strait': { name: '國際涉台新聞 International', enabled: true, priority: 1 },
   us: { name: 'United States', enabled: true, priority: 1 },
   europe: { name: 'Europe', enabled: true, priority: 1 },
